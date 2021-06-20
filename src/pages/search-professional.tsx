@@ -1,32 +1,41 @@
-import React, { useState } from "react";
 import { useTheme } from "@emotion/react";
+import useIndex from "data/hooks/pages/useIndex.page";
+import UseSearchProfessional from "data/hooks/pages/useSearchProfessional.page.mobile";
+import React, { useEffect } from "react";
 import { ScrollView } from "react-native";
-import PageTitle from "ui/components/data-display/PageTitle/PageTitle";
-import TextInput from "ui/components/inputs/TextInput/TextInput";
 import { TextInputMask } from "react-native-masked-text";
-import Button from "ui/components/inputs/Button/Button";
+import PageTitle from "ui/components/data-display/PageTitle/PageTitle";
 import UserInformation from "ui/components/data-display/UserInformation/UserInformation";
+import Button from "ui/components/inputs/Button/Button";
+import TextInput from "ui/components/inputs/TextInput/TextInput";
 import {
   ErrorText,
   FormContainer,
   ResponseContainer,
   TextContainer,
 } from "ui/styles/pages/search-professional.styled";
-import useIndex from "data/hooks/pages/useIndex.page";
 
 const SearchProfessional: React.FC = () => {
   const { colors } = useTheme();
   const {
-    cep,
-    setCep,
-    cepValido,
-    searchProfessional,
-    error,
-    professional,
-    search,
-    load,
-    others,
-  } = useIndex();
+      cep,
+      setCep,
+      cepValido,
+      searchProfessional,
+      error,
+      professional,
+      search,
+      load,
+      others,
+    } = useIndex(),
+    { cepAutomatic } = UseSearchProfessional();
+
+  useEffect(() => {
+    if (cepAutomatic && !cep) {
+      setCep(cepAutomatic);
+      searchProfessional(cepAutomatic);
+    }
+  }, [cepAutomatic]);
 
   return (
     <ScrollView>
