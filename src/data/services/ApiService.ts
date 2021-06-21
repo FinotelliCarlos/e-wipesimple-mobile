@@ -1,6 +1,7 @@
 import axios from "axios";
+import config from "../../../config.local";
 
-const url = "http://192.168.0.172:8000/";
+const url = `http://${config.MEUIP}:8000/`;
 
 export const ApiService = axios.create({
   baseURL: url,
